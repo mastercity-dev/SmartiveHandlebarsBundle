@@ -77,6 +77,11 @@ class Renderer
         return $this->handlebarsRenderingEngine->render($template, $data);
     }
 
+    public function setCache(Cache $cache)
+    {
+        $this->handlebarsRenderingEngine->setCache($cache);
+    }
+
     /**
      * Returns all directories including their sub directories for the given template resources
      *
