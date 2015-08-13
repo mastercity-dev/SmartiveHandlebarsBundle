@@ -18,13 +18,18 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
+
         $treeBuilder = new TreeBuilder();
+
         $rootNode = $treeBuilder->root('smartive_handlebars');
         $rootNode
             ->children()
                 ->arrayNode('templating')
                     ->canBeDisabled()
                     ->children()
+                        ->scalarNode('cache_service_id')
+                            ->defaultNull()
+                        ->end()
                         ->scalarNode('file_extension')
                             ->defaultValue('.hbs')
                         ->end()

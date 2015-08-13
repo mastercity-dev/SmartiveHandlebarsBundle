@@ -21,6 +21,12 @@ class HelperCompilerPass implements CompilerPassInterface
             'smartive_handlebars.templating.renderer'
         );
 
+        $cacheClass = $container->get('smartive_handlebars.templating.cache_service_id');
+        if ($cacheClass !== null) {
+            $cacheService = $container->get($cacheClass);
+            $definition->addMethodCall("setCache", $cacheService);
+        }
+
         $taggedHelpers = $container->findTaggedServiceIds(
             'smartive_handlebars.helper'
         );
@@ -33,5 +39,7 @@ class HelperCompilerPass implements CompilerPassInterface
                 );
             }
         }
+
+
     }
 }
