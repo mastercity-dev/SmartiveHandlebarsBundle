@@ -4,6 +4,7 @@ namespace Smartive\HandlebarsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\DependencyInjection\Reference;
 
 class HelperCompilerPass implements CompilerPassInterface
@@ -21,11 +22,14 @@ class HelperCompilerPass implements CompilerPassInterface
             'smartive_handlebars.templating.renderer'
         );
 
-        $cacheClass = $container->get('smartive_handlebars.templating.cache_service_id');
-        if ($cacheClass !== null) {
-            $cacheService = $container->get($cacheClass);
-            $definition->addMethodCall("setCache", $cacheService);
-        }
+        try {
+            $cacheClass = $container->getParameter('smartive_handlebars.templating.cache_service_id');
+            if ($cacheClass !== null) {
+                $cacheService = $container->get($cacheClass);
+                $definition->addMethodCall("setCache", $cacheService);
+            }
+        } catch(ParameterNotFoundException $e) {}
+
 
         $taggedHelpers = $container->findTaggedServiceIds(
             'smartive_handlebars.helper'
