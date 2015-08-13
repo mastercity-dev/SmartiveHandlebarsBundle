@@ -25,8 +25,7 @@ class HelperCompilerPass implements CompilerPassInterface
         try {
             $cacheClass = $container->getParameter('smartive_handlebars.templating.cache_service_id');
             if ($cacheClass !== null) {
-                $cacheService = $container->get($cacheClass);
-                $definition->addMethodCall("setCache", [ $cacheService ]);
+                $definition->addMethodCall("setCache", [ new Reference($cacheClass) ]);
             }
         } catch(ParameterNotFoundException $e) {}
 
