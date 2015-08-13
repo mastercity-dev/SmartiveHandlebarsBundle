@@ -2,6 +2,7 @@
 
 namespace Smartive\HandlebarsBundle\Templating;
 
+use Handlebars\Cache;
 use Handlebars\Handlebars;
 use Handlebars\Helper;
 use Handlebars\Loader\FilesystemLoader;
@@ -77,7 +78,7 @@ class Renderer
         return $this->handlebarsRenderingEngine->render($template, $data);
     }
 
-    public function setCache(Cache $cache)
+    public function setCache($cache)
     {
         $this->handlebarsRenderingEngine->setCache($cache);
     }
